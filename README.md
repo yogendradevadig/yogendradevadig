@@ -1,10 +1,44 @@
-- 👋 Hi, I’m @yogendradevadig
-- 👀 I’m interested in learning
-- 🌱 I’m currently learning Data science & coding
-- 💞️ I’m looking to collaborate on Data analyst
-- 📫 How to reach me yogu.devadig@gmail.com
+# Import Data Set
 
-<!---
-yogendradevadig/yogendradevadig is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+import pandas as pd
+data = pd.read_csv("NewspaperData.csv")
+data.head()
+
+data.info()
+
+# Correlation
+
+data.corr()
+
+import seaborn as sns
+sns.distplot(data['daily'])
+
+import seaborn as sns
+sns.distplot(data['sunday'])
+
+Fitting a Linear Regression Model
+
+import statsmodels.formula.api as smf
+import seaborn as sns
+model = smf.ols("sunday~daily",data = data).fit()
+
+sns.regplot(x="daily", y="sunday", data=data);
+
+#Coefficients
+model.params
+
+#t and p-Values
+print(model.tvalues, '\n', model.pvalues)    
+
+#R squared values
+(model.rsquared,model.rsquared_adj)
+
+# Predict for new data point
+
+#Predict for 200 and 300 daily circulation
+newdata=pd.Series([200,300])
+
+data_pred=pd.DataFrame(newdata,columns=['daily'])
+
+model.predict(data_pred)
+
